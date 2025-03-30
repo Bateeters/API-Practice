@@ -6,10 +6,52 @@
     <title>Document</title>
 </head>
 <body>
+    <div style="padding:15px;">
+        <input id="searchText" type="text" placeholder="Search for a Gif">
+        <button id="searchBtn" onclick="getSearch()">Search</button>
+    </div>
     <img src="#" alt="">
     <script>
         const img = document.querySelector('img');
-        fetch('https://api.giphy.com/v1/gifs/translate?api_key=NGt9TIMRypT37J2TmGLL4QnL252zM0nL&s=cats', {mode: 'cors'})
+        const key = 'NGt9TIMRypT37J2TmGLL4QnL252zM0nL';
+        let search = 'cats';
+
+        const searchText = document.querySelector('#searchText');
+        const searchBtn = document.querySelector('#searchBtn');
+
+        function getSearch() {
+            if (searchText.value == '' ){
+
+                fetch(`https://api.giphy.com/v1/gifs/translate?api_key=${key}&s=cats`, {mode: 'cors'})
+                .then(function(response) {
+                    return response.json();
+                })
+                .then(function(response) {
+                    img.src = response.data.images.original.url;
+                });
+
+                alert("You did not enter anything to search for so here's a cat gif!");
+
+                searchText.value = "";
+
+
+            } else {
+                search = searchText.value;
+                fetch(`https://api.giphy.com/v1/gifs/translate?api_key=${key}&s=${search}`, {mode: 'cors'})
+                .then(function(response) {
+                    return response.json();
+                })
+                .then(function(response) {
+                    img.src = response.data.images.original.url;
+                });
+                alert(`Here's a ${searchText.value} gif!`)
+
+                searchText.value = "";
+            }
+        }
+
+
+        fetch(`https://api.giphy.com/v1/gifs/translate?api_key=${key}&s=${search}`, {mode: 'cors'})
           .then(function(response) {
             return response.json();
           })
