@@ -44,8 +44,7 @@
                 .then(function(response) {
                     img.src = response.data.images.original.url;
                 });
-                alert(`Here's a ${searchText.value} gif!`)
-
+                
                 searchText.value = "";
             }
         }
